@@ -20,5 +20,6 @@ Split a string and return a character vector
 A simplified wrapper around base R's function strsplit() that returns the first element.
 }
 \examples{
-strsplit1("alfa,bravo,charlie,delta", split = ",")
+x <- "alfa,bravo,charlie,delta"
+strsplit1(x, split = ",")#' 
 }

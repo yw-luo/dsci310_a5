@@ -3,10 +3,13 @@
 #'
 #' @param x A character string to split.
 #' @param split A character string containing the regular expression to use for splitting.
+#' 
 #' @return A character vector of the split pieces.
-#' @examples
-#' strsplit1("alfa,bravo,charlie,delta", split = ",")
 #' @export
+#'
+#' @examples
+#' x <- "alfa,bravo,charlie,delta"
+#' strsplit1(x, split = ",")#' 
 strsplit1 <- function(x, split) {
   strsplit(x, split = split)[[1]]
 }
