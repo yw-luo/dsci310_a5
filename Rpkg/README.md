@@ -1,0 +1,81 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+**NOTE: This is a toy package created for expository purposes, for the
+second edition of [R Packages](https://r-pkgs.org). It is not meant to
+actually be useful. If you want a package for factor handling, please
+see [stringr](https://stringr.tidyverse.org),
+[stringi](https://stringi.gagolewski.com/),
+[rex](https://cran.r-project.org/package=rex), and
+[rematch2](https://cran.r-project.org/package=rematch2).**
+
+# Rpkg
+
+<!-- badges: start -->
+
+<!-- badges: end -->
+
+This is a toy R package created for practice in DSCI 310. It provides a
+simple and safe wrapper around `stringr::str_split()` for splitting a
+single string into parts.
+
+## Installation
+
+You can install the development version of Rpkg from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("yw-luo/dsci310_a5")
+```
+
+## Usage
+
+A fairly common task when dealing with strings is the need to split a
+single string into many parts. This is what `base::strsplit()` and
+`stringr::str_split()` do.
+
+``` r
+library(Rpkg)
+
+# Split a string normally
+str_split_one("a,b,c", ",")
+#> [1] "a" "b" "c"
+
+# Limit number of splits
+str_split_one("a,b,c", ",", n = 2)
+#> [1] "a"   "b,c"
+
+# Use fixed pattern for dots
+str_split_one("192.168.0.1", stringr::fixed("."))
+#> [1] "192" "168" "0"   "1"
+```
+
+Notice how the return value is a **list** of length one, where the first
+element holds the character vector of parts. Often the shape of this
+output is inconvenient, i.e. we want the un-listed version.
+
+That’s exactly what `Rpkg::str_split_one()` does.
+
+``` r
+(x <- "alfa,bravo,charlie,delta")
+#> [1] "alfa,bravo,charlie,delta"
+str_split_one(x, pattern = ",")
+#> [1] "alfa"    "bravo"   "charlie" "delta"
+```
+
+Use `str_split_one()` when the input is known to be a single string. For
+safety, it will error if its input has length greater than one.
+
+`str_split_one()` is built on `stringr::str_split()`, so you can use its
+`n` argument and stringr’s general interface for describing the
+`pattern` to be matched.
+
+``` r
+str_split_one(x, pattern = ",", n = 2)
+#> [1] "alfa"                "bravo,charlie,delta"
+
+y <- "192.168.0.1"
+str_split_one(y, pattern = stringr::fixed("."))
+#> [1] "192" "168" "0"   "1"
+```
